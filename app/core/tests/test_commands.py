@@ -21,7 +21,8 @@ class CommandTest(SimpleTestCase):
         """Test waiting for the database when getting an error"""
 
         # Simulate two pc2Error, one OperationalError, and then success
-        patched_check.side_effect = [pc2Error] * 2 + [OperationalError] + [True]
+        patched_check.side_effect = [pc2Error] * 2 + \
+            [OperationalError] + [True]
         call_command("wait_for_db")
         self.assertEqual(patched_check.call_count, 4)
         patched_check.assert_called_with(databases=["default"])
